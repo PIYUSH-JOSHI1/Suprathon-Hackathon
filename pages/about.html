@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="../index.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="ngo-directory.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">NGOs</a>
+                        <a href="volunteer-events.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">Volunteer</a>
+                        <a href="transparency.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">Transparency</a>
+                        <a href="about.html" class="text-gray-900 hover:text-green-600 px-3 py-2 text-sm font-medium">About</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div id="authButtons" class="flex space-x-2">
+                        <button onclick="showLoginModal()" class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">Login</button>
+                        <button onclick="showRegisterModal()" class="border border-green-600 text-green-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-50">Register</button>
+                    </div>
+                    <div id="userMenu" class="hidden relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="#" onclick="goToDashboard()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="bg-gradient-to-r from-green-600 to-blue-600 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6">About NGO Connect</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto">Empowering social change through technology and transparency</p>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Mission</h2>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                To create a transparent, efficient, and impactful ecosystem that connects NGOs, donors, and volunteers, 
+                enabling meaningful social change across India through technology-driven solutions.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="eye" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Transparency</h3>
+                <p class="text-gray-600">Complete visibility into how donations are utilized with real-time tracking and impact reports.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="users" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Community</h3>
+                <p class="text-gray-600">Building a strong community of changemakers working together for social impact.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="zap" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Impact</h3>
+                <p class="text-gray-600">Maximizing social impact through efficient resource allocation and verified outcomes.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Section -->
+    <div class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Our Story</h2>
+                    <div class="space-y-4 text-gray-600">
+                        <p>
+                            NGO Connect was born from a simple observation: while India has thousands of dedicated NGOs 
+                            working tirelessly for social causes, there was a significant gap between these organizations 
+                            and the people who wanted to support them.
+                        </p>
+                        <p>
+                            Donors often struggled to find trustworthy organizations, volunteers couldn't easily discover 
+                            meaningful opportunities, and NGOs faced challenges in reaching potential supporters. 
+                            Most importantly, there was a lack of transparency in how donations were being utilized.
+                        </p>
+                        <p>
+                            Founded in 2024, NGO Connect bridges these gaps by creating a unified platform that brings 
+                            together all stakeholders in the social impact ecosystem. Our technology-driven approach 
+                            ensures transparency, builds trust, and maximizes the impact of every contribution.
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <img src="/placeholder.svg?height=400&width=600" 
+                         alt="Our Story" class="rounded-lg shadow-lg">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Values Section -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Values</h2>
+                <p class="text-lg text-gray-600">The principles that guide everything we do</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-lg p-6 shadow-md">
+                    <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Trust</h3>
+                    <p class="text-gray-600 text-sm">Building trust through verification, transparency, and accountability in every interaction.</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-md">
+                    <div class="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="heart" class="w-6 h-6 text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Compassion</h3>
+                    <p class="text-gray-600 text-sm">Driven by empathy and a genuine desire to create positive change in society.</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-md">
+                    <div class="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="lightbulb" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Innovation</h3>
+                    <p class="text-gray-600 text-sm">Leveraging technology to solve complex social problems and improve efficiency.</p>
+                </div>
+                <div class="bg-white rounded-lg p-6 shadow-md">
+                    <div class="bg-yellow-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                        <i data-lucide="target" class="w-6 h-6 text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Impact</h3>
+                    <p class="text-gray-600 text-sm">Measuring success by the positive change we enable in communities across India.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="bg-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Our Team</h2>
+                <p class="text-lg text-gray-600">Meet the passionate individuals behind NGO Connect</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <img src="/placeholder.svg?height=200&width=200" 
+                         alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <h3 class="text-xl font-semibold mb-1">Priya Sharma</h3>
+                    <p class="text-green-600 mb-2">Founder & CEO</p>
+                    <p class="text-gray-600 text-sm">Former social worker with 10+ years of experience in the NGO sector.</p>
+                </div>
+                <div class="text-center">
+                    <img src="/placeholder.svg?height=200&width=200" 
+                         alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <h3 class="text-xl font-semibold mb-1">Rajesh Kumar</h3>
+                    <p class="text-green-600 mb-2">CTO</p>
+                    <p class="text-gray-600 text-sm">Technology leader passionate about using tech for social good.</p>
+                </div>
+                <div class="text-center">
+                    <img src="/placeholder.svg?height=200&width=200" 
+                         alt="Team Member" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                    <h3 class="text-xl font-semibold mb-1">Anita Patel</h3>
+                    <p class="text-green-600 mb-2">Head of Operations</p>
+                    <p class="text-gray-600 text-sm">Operations expert ensuring smooth platform functioning and user experience.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="bg-gray-50 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Get in Touch</h2>
+                <p class="text-lg text-gray-600">Have questions or want to partner with us? We'd love to hear from you.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="mail" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Email Us</h3>
+                    <p class="text-gray-600">info@ngoconnect.org</p>
+                    <p class="text-gray-600">support@ngoconnect.org</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="phone" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Call Us</h3>
+                    <p class="text-gray-600">+91-11-4567-8900</p>
+                    <p class="text-gray-600">Mon-Fri, 9 AM - 6 PM</p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="map-pin" class="w-8 h-8 text-green-600"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Visit Us</h3>
+                    <p class="text-gray-600">123 Social Impact Hub</p>
+                    <p class="text-gray-600">New Delhi, India 110001</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Login</h2>
+                <button onclick="hideLoginModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="loginEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="loginPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Login as</label>
+                    <select id="loginRole" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="donor">Donor</option>
+                        <option value="volunteer">Volunteer</option>
+                        <option value="ngo">NGO</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Register</h2>
+                <button onclick="hideRegisterModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                    <input type="text" id="registerName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="registerEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="registerPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Register as</label>
+                    <select id="registerRole" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="donor">Donor</option>
+                        <option value="volunteer">Volunteer</option>
+                        <option value="ngo">NGO</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeApp();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="../index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg min-h-screen">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800">NGO Dashboard</h2>
+            </div>
+            <nav class="mt-6">
+                <a href="#" onclick="showSection('overview')" class="sidebar-link active" data-section="overview">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" onclick="showSection('campaigns')" class="sidebar-link" data-section="campaigns">
+                    <i data-lucide="target" class="w-5 h-5"></i>
+                    <span>Campaigns</span>
+                </a>
+                <a href="#" onclick="showSection('events')" class="sidebar-link" data-section="events">
+                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                    <span>Events</span>
+                </a>
+                <a href="#" onclick="showSection('donations')" class="sidebar-link" data-section="donations">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                    <span>Donations</span>
+                </a>
+                <a href="#" onclick="showSection('volunteers')" class="sidebar-link" data-section="volunteers">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>Volunteers</span>
+                </a>
+                <a href="#" onclick="showSection('reports')" class="sidebar-link" data-section="reports">
+                    <i data-lucide="bar-chart" class="w-5 h-5"></i>
+                    <span>Reports</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Overview Section -->
+            <div id="overview" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Welcome back!</h1>
+                    <p class="text-gray-600 mt-2">Here's your NGO performance summary</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <i data-lucide="indian-rupee" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Total Raised</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalRaised">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <i data-lucide="target" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Active Campaigns</p>
+                                <p class="text-2xl font-bold text-gray-900" id="activeCampaigns">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-purple-100 rounded-full">
+                                <i data-lucide="users" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Volunteers</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalVolunteers">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <i data-lucide="calendar" class="w-6 h-6 text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Events</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalEvents">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="dashboard-card">
+                    <h3 class="text-lg font-semibold mb-4">Recent Activity</h3>
+                    <div id="recentActivity" class="space-y-4">
+                        <!-- Activity will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Campaigns Section -->
+            <div id="campaigns" class="section hidden">
+                <div class="mb-8 flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Campaigns</h1>
+                        <p class="text-gray-600 mt-2">Manage your fundraising campaigns</p>
+                    </div>
+                    <button onclick="showCreateCampaignModal()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                        <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>Create Campaign
+                    </button>
+                </div>
+
+                <div id="campaignsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Campaigns will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Events Section -->
+            <div id="events" class="section hidden">
+                <div class="mb-8 flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Events</h1>
+                        <p class="text-gray-600 mt-2">Manage volunteer events</p>
+                    </div>
+                    <button onclick="showCreateEventModal()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                        <i data-lucide="plus" class="w-4 h-4 inline mr-2"></i>Create Event
+                    </button>
+                </div>
+
+                <div id="eventsList" class="space-y-6">
+                    <!-- Events will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Other sections... -->
+            <div id="donations" class="section hidden">
+                <h1 class="text-3xl font-bold text-gray-900 mb-8">Donations Received</h1>
+                <div class="dashboard-card">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Date</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Donor</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Amount</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Campaign</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donationsTable">
+                                <!-- Donations will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="volunteers" class="section hidden">
+                <h1 class="text-3xl font-bold text-gray-900 mb-8">Volunteer Management</h1>
+                <div id="volunteersList" class="space-y-4">
+                    <!-- Volunteers will be loaded here -->
+                </div>
+            </div>
+
+            <div id="reports" class="section hidden">
+                <h1 class="text-3xl font-bold text-gray-900 mb-8">Impact Reports</h1>
+                <div class="dashboard-card">
+                    <p class="text-gray-600">Generate and view impact reports here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Campaign Modal -->
+    <div id="createCampaignModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Create Campaign</h2>
+                <button onclick="hideCreateCampaignModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form id="createCampaignForm" onsubmit="handleCreateCampaign(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Campaign Title</label>
+                    <input type="text" id="campaignTitle" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Description</label>
+                    <textarea id="campaignDescription" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500" rows="3"></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Target Amount (₹)</label>
+                    <input type="number" id="campaignTarget" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">End Date</label>
+                    <input type="date" id="campaignEndDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">Create Campaign</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/ngo-dashboard.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeApp();
+            
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.role !== 'ngo') {
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            loadNGODashboard();
+        });
+    </script>
+</body>
+</html>

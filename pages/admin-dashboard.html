@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="../index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg min-h-screen">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800">Admin Dashboard</h2>
+            </div>
+            <nav class="mt-6">
+                <a href="#" onclick="showSection('overview')" class="sidebar-link active" data-section="overview">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" onclick="showSection('approvals')" class="sidebar-link" data-section="approvals">
+                    <i data-lucide="check-circle" class="w-5 h-5"></i>
+                    <span>NGO Approvals</span>
+                </a>
+                <a href="#" onclick="showSection('users')" class="sidebar-link" data-section="users">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>User Management</span>
+                </a>
+                <a href="#" onclick="showSection('analytics')" class="sidebar-link" data-section="analytics">
+                    <i data-lucide="bar-chart" class="w-5 h-5"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" onclick="showSection('reports')" class="sidebar-link" data-section="reports">
+                    <i data-lucide="file-text" class="w-5 h-5"></i>
+                    <span>Reports</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Overview Section -->
+            <div id="overview" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Admin Overview</h1>
+                    <p class="text-gray-600 mt-2">Platform statistics and management</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <i data-lucide="users" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Total Users</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalUsers">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <i data-lucide="building" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Total NGOs</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalNGOs">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-purple-100 rounded-full">
+                                <i data-lucide="indian-rupee" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Total Donations</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalDonations">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <i data-lucide="calendar" class="w-6 h-6 text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Total Events</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalEvents">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="dashboard-card">
+                    <h3 class="text-lg font-semibold mb-4">Recent Platform Activity</h3>
+                    <div id="recentActivity" class="space-y-4">
+                        <!-- Activity will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- NGO Approvals Section -->
+            <div id="approvals" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">NGO Approvals</h1>
+                    <p class="text-gray-600 mt-2">Review and approve NGO registrations</p>
+                </div>
+
+                <div id="pendingApprovals" class="space-y-4">
+                    <!-- Pending approvals will be loaded here -->
+                </div>
+            </div>
+
+            <!-- User Management Section -->
+            <div id="users" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">User Management</h1>
+                    <p class="text-gray-600 mt-2">Manage platform users</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Name</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Email</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Role</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTable">
+                                <!-- Users will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analytics Section -->
+            <div id="analytics" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Platform Analytics</h1>
+                    <p class="text-gray-600 mt-2">Detailed platform insights</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="dashboard-card">
+                        <h3 class="text-lg font-semibold mb-4">User Growth</h3>
+                        <div id="userGrowthChart" class="h-64 flex items-center justify-center text-gray-500">
+                            Chart will be displayed here
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3 class="text-lg font-semibold mb-4">Donation Trends</h3>
+                        <div id="donationTrendsChart" class="h-64 flex items-center justify-center text-gray-500">
+                            Chart will be displayed here
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Section -->
+            <div id="reports" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Platform Reports</h1>
+                    <p class="text-gray-600 mt-2">Generate and download reports</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="dashboard-card text-center">
+                        <i data-lucide="users" class="w-12 h-12 text-blue-600 mx-auto mb-4"></i>
+                        <h3 class="text-lg font-semibold mb-2">User Report</h3>
+                        <p class="text-gray-600 mb-4">Comprehensive user statistics</p>
+                        <button onclick="generateReport('users')" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                            Generate Report
+                        </button>
+                    </div>
+                    <div class="dashboard-card text-center">
+                        <i data-lucide="indian-rupee" class="w-12 h-12 text-green-600 mx-auto mb-4"></i>
+                        <h3 class="text-lg font-semibold mb-2">Financial Report</h3>
+                        <p class="text-gray-600 mb-4">Donation and financial data</p>
+                        <button onclick="generateReport('financial')" class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
+                            Generate Report
+                        </button>
+                    </div>
+                    <div class="dashboard-card text-center">
+                        <i data-lucide="activity" class="w-12 h-12 text-purple-600 mx-auto mb-4"></i>
+                        <h3 class="text-lg font-semibold mb-2">Activity Report</h3>
+                        <p class="text-gray-600 mb-4">Platform activity summary</p>
+                        <button onclick="generateReport('activity')" class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 transition">
+                            Generate Report
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeApp();
+            
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.role !== 'admin') {
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            loadAdminDashboard();
+        });
+    </script>
+</body>
+</html>

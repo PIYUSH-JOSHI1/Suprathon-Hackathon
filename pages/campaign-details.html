@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Details - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div id="authButtons" class="flex space-x-2">
+                        <button onclick="showLoginModal()" class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">Login</button>
+                        <button onclick="showRegisterModal()" class="border border-green-600 text-green-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-50">Register</button>
+                    </div>
+                    <div id="userMenu" class="hidden relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="#" onclick="goToDashboard()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Campaign Details -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Back Button -->
+        <div class="mb-6">
+            <button onclick="window.history.back()" class="flex items-center text-green-600 hover:text-green-800">
+                <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i>
+                Back
+            </button>
+        </div>
+
+        <!-- Campaign Header -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+            <img id="campaignImage" src="/placeholder.svg?height=300&width=800" alt="Campaign Image" class="w-full h-64 object-cover">
+            <div class="p-8">
+                <div class="flex items-center justify-between mb-4">
+                    <h1 id="campaignTitle" class="text-3xl font-bold text-gray-900"></h1>
+                    <span class="status-badge status-active">Active</span>
+                </div>
+                <p class="text-green-600 font-medium mb-2" id="campaignNGO"></p>
+                <p id="campaignDescription" class="text-gray-600 mb-6"></p>
+
+                <!-- Progress Bar -->
+                <div class="mb-6">
+                    <div class="flex justify-between text-sm text-gray-600 mb-2">
+                        <span>Raised: <span id="raisedAmount" class="font-semibold"></span></span>
+                        <span>Goal: <span id="targetAmount" class="font-semibold"></span></span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div id="progressBar" class="progress-bar h-3 rounded-full" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between text-sm text-gray-600 mt-2">
+                        <span id="progressPercentage">0% funded</span>
+                        <span>Ends: <span id="endDate"></span></span>
+                    </div>
+                </div>
+
+                <!-- Donation Form -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h3 class="text-lg font-semibold mb-4">Make a Donation</h3>
+                    <form id="donationForm" onsubmit="handleDonation(event)">
+                        <div class="grid grid-cols-4 gap-2 mb-4">
+                            <button type="button" onclick="setAmount(500)" class="amount-btn border border-gray-300 py-2 px-4 rounded-md hover:bg-green-50 hover:border-green-500">₹500</button>
+                            <button type="button" onclick="setAmount(1000)" class="amount-btn border border-gray-300 py-2 px-4 rounded-md hover:bg-green-50 hover:border-green-500">₹1,000</button>
+                            <button type="button" onclick="setAmount(2500)" class="amount-btn border border-gray-300 py-2 px-4 rounded-md hover:bg-green-50 hover:border-green-500">₹2,500</button>
+                            <button type="button" onclick="setAmount(5000)" class="amount-btn border border-gray-300 py-2 px-4 rounded-md hover:bg-green-50 hover:border-green-500">₹5,000</button>
+                        </div>
+                        <div class="mb-4">
+                            <input type="number" id="customAmount" placeholder="Enter custom amount" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div class="mb-4">
+                            <label class="flex items-center">
+                                <input type="checkbox" id="anonymous" class="mr-2">
+                                <span class="text-sm text-gray-700">Donate anonymously</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition font-semibold">
+                            <i data-lucide="heart" class="w-4 h-4 inline mr-2"></i>
+                            Donate Now
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Donations -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h3 class="text-lg font-semibold mb-4">Recent Donations</h3>
+            <div id="recentDonations" class="space-y-3">
+                <!-- Recent donations will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Updates -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-lg font-semibold mb-4">Campaign Updates</h3>
+            <div id="campaignUpdates" class="space-y-4">
+                <!-- Updates will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Processing Modal -->
+    <div id="paymentModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center">
+                <div class="spinner mx-auto mb-4"></div>
+                <h3 class="text-lg font-semibold mb-2">Processing Payment</h3>
+                <p class="text-gray-600">Please wait while we process your donation...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="check" class="w-8 h-8 text-green-600"></i>
+                </div>
+                <h3 class="text-lg font-semibold mb-2">Thank You!</h3>
+                <p class="text-gray-600 mb-4">Your donation has been processed successfully.</p>
+                <div class="space-y-2">
+                    <button onclick="downloadReceipt()" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">
+                        Download Receipt
+                    </button>
+                    <button onclick="closeSuccessModal()" class="w-full border border-gray-300 text-gray-700 py-2 px-4 rounded-md hover:bg-gray-50 transition">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/campaign.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeApp();
+            loadCampaignDetails();
+        });
+    </script>
+</body>
+</html>

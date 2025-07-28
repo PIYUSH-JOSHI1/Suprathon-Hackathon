@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Dashboard - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="../index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg min-h-screen">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800">Volunteer Dashboard</h2>
+            </div>
+            <nav class="mt-6">
+                <a href="#" onclick="showSection('overview')" class="sidebar-link active" data-section="overview">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" onclick="showSection('myEvents')" class="sidebar-link" data-section="myEvents">
+                    <i data-lucide="calendar" class="w-5 h-5"></i>
+                    <span>My Events</span>
+                </a>
+                <a href="#" onclick="showSection('nearbyEvents')" class="sidebar-link" data-section="nearbyEvents">
+                    <i data-lucide="map-pin" class="w-5 h-5"></i>
+                    <span>Nearby Events</span>
+                </a>
+                <a href="#" onclick="showSection('certificates')" class="sidebar-link" data-section="certificates">
+                    <i data-lucide="award" class="w-5 h-5"></i>
+                    <span>Certificates</span>
+                </a>
+                <a href="#" onclick="showSection('impact')" class="sidebar-link" data-section="impact">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    <span>My Impact</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Overview Section -->
+            <div id="overview" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Welcome back!</h1>
+                    <p class="text-gray-600 mt-2">Here's your volunteering summary</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <i data-lucide="calendar" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Events Joined</p>
+                                <p class="text-2xl font-bold text-gray-900" id="eventsJoined">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <i data-lucide="check-circle" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Completed</p>
+                                <p class="text-2xl font-bold text-gray-900" id="completedEvents">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-purple-100 rounded-full">
+                                <i data-lucide="clock" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Hours Volunteered</p>
+                                <p class="text-2xl font-bold text-gray-900" id="hoursVolunteered">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <i data-lucide="users" class="w-6 h-6 text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Lives Impacted</p>
+                                <p class="text-2xl font-bold text-gray-900" id="livesImpacted">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Events -->
+                <div class="dashboard-card">
+                    <h3 class="text-lg font-semibold mb-4">Recent Events</h3>
+                    <div id="myEvents" class="space-y-4">
+                        <!-- Events will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Events Section -->
+            <div id="myEvents" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">My Events</h1>
+                    <p class="text-gray-600 mt-2">Track your volunteering activities</p>
+                </div>
+
+                <div id="myEventsList" class="space-y-6">
+                    <!-- Events will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Nearby Events Section -->
+            <div id="nearbyEvents" class="section hidden">
+                <div class="mb-8 flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold text-gray-900">Nearby Events</h1>
+                        <p class="text-gray-600 mt-2">Find volunteer opportunities near you</p>
+                    </div>
+                    <button onclick="requestLocationAndFindNearbyEvents()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                        <i data-lucide="map-pin" class="w-4 h-4 inline mr-2"></i>Find Nearby Events
+                    </button>
+                </div>
+
+                <div id="locationStatus" class="mb-6 hidden">
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <div class="flex items-center">
+                            <i data-lucide="map-pin" class="w-5 h-5 text-blue-600 mr-2"></i>
+                            <span class="text-blue-800">Your location: <span id="currentLocation">Loading...</span></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="nearbyEventsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Nearby events will be loaded here -->
+                </div>
+
+                <div id="locationError" class="text-center py-8 hidden">
+                    <i data-lucide="map-pin-off" class="w-16 h-16 text-gray-400 mx-auto mb-4"></i>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-2">Location Access Required</h3>
+                    <p class="text-gray-600 mb-4">Please allow location access to find nearby volunteer opportunities</p>
+                    <button onclick="requestLocationAndFindNearbyEvents()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                        Try Again
+                    </button>
+                </div>
+            </div>
+
+            <!-- Certificates Section -->
+            <div id="certificates" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">My Certificates</h1>
+                    <p class="text-gray-600 mt-2">Download your volunteer certificates</p>
+                </div>
+
+                <div id="certificatesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Certificates will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Impact Section -->
+            <div id="impact" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">My Impact</h1>
+                    <p class="text-gray-600 mt-2">See the difference you've made</p>
+                </div>
+
+                <div id="impactStats" class="space-y-6">
+                    <!-- Impact stats will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/volunteer.js"></script>
+    <script src="../js/location.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeApp();
+            
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.role !== 'volunteer') {
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            loadVolunteerDashboard();
+        });
+    </script>
+</body>
+</html>

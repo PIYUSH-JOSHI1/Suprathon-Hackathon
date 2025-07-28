@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="../index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Home</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg min-h-screen">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800">Donor Dashboard</h2>
+            </div>
+            <nav class="mt-6">
+                <a href="#" onclick="showSection('overview')" class="sidebar-link active" data-section="overview">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" onclick="showSection('donations')" class="sidebar-link" data-section="donations">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                    <span>My Donations</span>
+                </a>
+                <a href="#" onclick="showSection('transparency')" class="sidebar-link" data-section="transparency">
+                    <i data-lucide="eye" class="w-5 h-5"></i>
+                    <span>Transparency</span>
+                </a>
+                <a href="#" onclick="showSection('certificates')" class="sidebar-link" data-section="certificates">
+                    <i data-lucide="award" class="w-5 h-5"></i>
+                    <span>Certificates</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Overview Section -->
+            <div id="overview" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Welcome back!</h1>
+                    <p class="text-gray-600 mt-2">Here's your donation impact summary</p>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-green-100 rounded-full">
+                                <i data-lucide="heart" class="w-6 h-6 text-green-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Total Donated</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalDonated">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-blue-100 rounded-full">
+                                <i data-lucide="building" class="w-6 h-6 text-blue-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">NGOs Supported</p>
+                                <p class="text-2xl font-bold text-gray-900" id="ngosSupported">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-purple-100 rounded-full">
+                                <i data-lucide="users" class="w-6 h-6 text-purple-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">Lives Impacted</p>
+                                <p class="text-2xl font-bold text-gray-900" id="livesImpacted">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <div class="flex items-center">
+                            <div class="p-3 bg-yellow-100 rounded-full">
+                                <i data-lucide="calendar" class="w-6 h-6 text-yellow-600"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm text-gray-600">This Month</p>
+                                <p class="text-2xl font-bold text-gray-900" id="thisMonth">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Donations -->
+                <div class="dashboard-card">
+                    <h3 class="text-lg font-semibold mb-4">Recent Donations</h3>
+                    <div id="recentDonations" class="space-y-4">
+                        <!-- Recent donations will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Donations Section -->
+            <div id="donations" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">My Donations</h1>
+                    <p class="text-gray-600 mt-2">Track all your contributions and their impact</p>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full">
+                            <thead>
+                                <tr class="border-b border-gray-200">
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Date</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">NGO</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Campaign</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Amount</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
+                                    <th class="text-left py-3 px-4 font-semibold text-gray-900">Receipt</th>
+                                </tr>
+                            </thead>
+                            <tbody id="donationsTable">
+                                <!-- Donations will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Transparency Section -->
+            <div id="transparency" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Transparency Reports</h1>
+                    <p class="text-gray-600 mt-2">See how your donations are being utilized</p>
+                </div>
+
+                <div id="transparencyReports" class="space-y-6">
+                    <!-- Transparency reports will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Certificates Section -->
+            <div id="certificates" class="section hidden">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900">Donation Certificates</h1>
+                    <p class="text-gray-600 mt-2">Download your donation certificates for tax purposes</p>
+                </div>
+
+                <div id="certificatesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Certificates will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/donor.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeApp();
+            
+            // Check if user is logged in and is a donor
+            const currentUser = getCurrentUser();
+            if (!currentUser || currentUser.role !== 'donor') {
+                window.location.href = '../index.html';
+                return;
+            }
+            
+            loadDonorDashboard();
+        });
+    </script>
+</body>
+</html>

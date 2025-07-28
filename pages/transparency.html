@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transparency Ledger - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="../index.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="ngo-directory.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">NGOs</a>
+                        <a href="volunteer-events.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">Volunteer</a>
+                        <a href="transparency.html" class="text-gray-900 hover:text-green-600 px-3 py-2 text-sm font-medium">Transparency</a>
+                        <a href="about.html" class="text-gray-500 hover:text-green-600 px-3 py-2 text-sm font-medium">About</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div id="authButtons" class="flex space-x-2">
+                        <button onclick="showLoginModal()" class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700">Login</button>
+                        <button onclick="showRegisterModal()" class="border border-green-600 text-green-600 px-4 py-2 rounded-md text-sm font-medium hover:bg-green-50">Register</button>
+                    </div>
+                    <div id="userMenu" class="hidden relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName"></span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="#" onclick="goToDashboard()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <h1 class="text-3xl font-bold text-gray-900">Transparency Ledger</h1>
+            <p class="text-gray-600 mt-2">Track how donations are being utilized across all NGOs</p>
+        </div>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-green-100 rounded-full">
+                        <i data-lucide="indian-rupee" class="w-6 h-6 text-green-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Total Donations</p>
+                        <p class="text-2xl font-bold text-gray-900">₹1.2Cr</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-blue-100 rounded-full">
+                        <i data-lucide="building" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Active NGOs</p>
+                        <p class="text-2xl font-bold text-gray-900">500+</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-purple-100 rounded-full">
+                        <i data-lucide="users" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Beneficiaries</p>
+                        <p class="text-2xl font-bold text-gray-900">50,000+</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="p-3 bg-yellow-100 rounded-full">
+                        <i data-lucide="trending-up" class="w-6 h-6 text-yellow-600"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm text-gray-600">Transparency Score</p>
+                        <p class="text-2xl font-bold text-gray-900">95%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Donations -->
+        <div class="bg-white rounded-lg shadow-md mb-8">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">Recent Donations</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Donor</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">NGO</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Purpose</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200" id="transparencyTable">
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Jan 28, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Anonymous</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Akshaya Patra Foundation</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">₹25,000</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mid-Day Meal Program</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="badge badge-success">Utilized</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Jan 27, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Rajesh Kumar</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Teach for India</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">₹15,000</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Teacher Training</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="badge badge-info">In Progress</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Jan 26, 2025</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Priya Sharma</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Smile Foundation</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-green-600">₹50,000</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Mission Education</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="badge badge-success">Utilized</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Utilization Reports -->
+        <div class="bg-white rounded-lg shadow-md">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900">Fund Utilization Reports</h2>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Akshaya Patra Foundation</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Program Implementation</span>
+                                <span class="font-medium">85%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Administrative Costs</span>
+                                <span class="font-medium">10%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Fundraising</span>
+                                <span class="font-medium">5%</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-green-600">
+                            <i data-lucide="check-circle" class="w-3 h-3 inline mr-1"></i>
+                            Verified by independent auditor
+                        </div>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Teach for India</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Program Implementation</span>
+                                <span class="font-medium">82%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Administrative Costs</span>
+                                <span class="font-medium">12%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Fundraising</span>
+                                <span class="font-medium">6%</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-green-600">
+                            <i data-lucide="check-circle" class="w-3 h-3 inline mr-1"></i>
+                            Verified by independent auditor
+                        </div>
+                    </div>
+                    
+                    <div class="border border-gray-200 rounded-lg p-4">
+                        <h3 class="font-semibold text-gray-900 mb-2">Smile Foundation</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Program Implementation</span>
+                                <span class="font-medium">88%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Administrative Costs</span>
+                                <span class="font-medium">8%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Fundraising</span>
+                                <span class="font-medium">4%</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 text-xs text-green-600">
+                            <i data-lucide="check-circle" class="w-3 h-3 inline mr-1"></i>
+                            Verified by independent auditor
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Login</h2>
+                <button onclick="hideLoginModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="loginEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="loginPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Login as</label>
+                    <select id="loginRole" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="donor">Donor</option>
+                        <option value="volunteer">Volunteer</option>
+                        <option value="ngo">NGO</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">Register</h2>
+                <button onclick="hideRegisterModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Name</label>
+                    <input type="text" id="registerName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="registerEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                    <input type="password" id="registerPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Register as</label>
+                    <select id="registerRole" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <option value="donor">Donor</option>
+                        <option value="volunteer">Volunteer</option>
+                        <option value="ngo">NGO</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+            initializeApp();
+        });
+    </script>
+</body>
+</html>
