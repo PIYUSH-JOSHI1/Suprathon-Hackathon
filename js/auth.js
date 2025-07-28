@@ -49,7 +49,12 @@ function handleLogin(event) {
       if (window.location.pathname.includes("index.html") || window.location.pathname === "/") {
         window.location.reload()
       } else {
-        window.location.href = "../dashboard.html" // goToDashboard();
+        // Check if we're already in pages directory
+        if (window.location.pathname.includes("/pages/")) {
+          window.location.href = "dashboard.html"
+        } else {
+          window.location.href = "pages/dashboard.html"
+        }
       }
     }, 1000)
   } else {
@@ -139,7 +144,12 @@ function showToast(message, type = "success") {
 
 // Helper function to redirect to the dashboard
 function goToDashboard() {
-  window.location.href = "../dashboard.html"
+  // Check if we're already in pages directory
+  if (window.location.pathname.includes("/pages/")) {
+    window.location.href = "dashboard.html"
+  } else {
+    window.location.href = "pages/dashboard.html"
+  }
 }
 
 // Helper function to get the current user
