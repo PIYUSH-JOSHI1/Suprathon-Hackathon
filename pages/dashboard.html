@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NGO Connect</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <a href="../index.html" class="text-2xl font-bold text-green-600">NGO Connect</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="../index.html" class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="ngo-directory.html" class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">NGOs</a>
+                    <a href="volunteer-events.html" class="text-gray-700 hover:text-green-600 px-3 py-2 rounded-md text-sm font-medium">Events</a>
+                    <div class="relative">
+                        <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 text-gray-700 hover:text-green-600">
+                            <span id="userName">User</span>
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="userDropdown" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50">
+                            <a href="#" onclick="goToProfile()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                            <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="w-64 bg-white shadow-lg min-h-screen">
+            <div class="p-6">
+                <h2 class="text-xl font-bold text-gray-800">Dashboard</h2>
+            </div>
+            <nav class="mt-6">
+                <a href="#" onclick="showSection('overview')" class="sidebar-link active" data-section="overview">
+                    <i data-lucide="home" class="w-5 h-5"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#" onclick="showSection('ngos')" class="sidebar-link" data-section="ngos">
+                    <i data-lucide="building" class="w-5 h-5"></i>
+                    <span>Browse NGOs</span>
+                </a>
+                <a href="#" onclick="showSection('donations')" class="sidebar-link" data-section="donations">
+                    <i data-lucide="heart" class="w-5 h-5"></i>
+                    <span>My Donations</span>
+                </a>
+                <a href="#" onclick="showSection('volunteer')" class="sidebar-link" data-section="volunteer">
+                    <i data-lucide="users" class="w-5 h-5"></i>
+                    <span>Volunteer Events</span>
+                </a>
+                <a href="#" onclick="showSection('impact')" class="sidebar-link" data-section="impact">
+                    <i data-lucide="trending-up" class="w-5 h-5"></i>
+                    <span>My Impact</span>
+                </a>
+                <a href="#" onclick="showSection('settings')" class="sidebar-link" data-section="settings">
+                    <i data-lucide="settings" class="w-5 h-5"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Overview Section -->
+            <div id="overview" class="section active">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome to your Dashboard</h1>
+                    <p class="text-gray-600">Track your impact and discover new ways to make a difference</p>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-green-100 text-green-600">
+                                <i data-lucide="heart" class="w-6 h-6"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Total Donated</p>
+                                <p class="text-2xl font-bold text-gray-900" id="totalDonated">₹0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                                <i data-lucide="clock" class="w-6 h-6"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Hours Volunteered</p>
+                                <p class="text-2xl font-bold text-gray-900" id="hoursVolunteered">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                                <i data-lucide="building" class="w-6 h-6"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">NGOs Supported</p>
+                                <p class="text-2xl font-bold text-gray-900" id="ngosSupported">0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <div class="flex items-center">
+                            <div class="p-3 rounded-full bg-orange-100 text-orange-600">
+                                <i data-lucide="award" class="w-6 h-6"></i>
+                            </div>
+                            <div class="ml-4">
+                                <p class="text-sm font-medium text-gray-600">Impact Score</p>
+                                <p class="text-2xl font-bold text-gray-900" id="impactScore">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Recent Donations</h3>
+                        <div id="recentDonations" class="space-y-4">
+                            <div class="text-center text-gray-500 py-8">
+                                <i data-lucide="heart" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                                <p>No donations yet</p>
+                                <a href="#" onclick="showSection('ngos')" class="text-green-600 hover:text-green-700 font-medium">Start donating</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Upcoming Events</h3>
+                        <div id="upcomingEvents" class="space-y-4">
+                            <div class="text-center text-gray-500 py-8">
+                                <i data-lucide="calendar" class="w-12 h-12 mx-auto mb-4 text-gray-300"></i>
+                                <p>No upcoming events</p>
+                                <a href="#" onclick="showSection('volunteer')" class="text-green-600 hover:text-green-700 font-medium">Find events</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Browse NGOs Section -->
+            <div id="ngos" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Browse NGOs</h1>
+                    <p class="text-gray-600">Discover verified NGOs making a real impact</p>
+                </div>
+
+                <!-- Search and Filter -->
+                <div class="mb-6 flex flex-col sm:flex-row gap-4">
+                    <div class="flex-1">
+                        <input type="text" id="ngoSearch" placeholder="Search NGOs..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                    </div>
+                    <select id="categoryFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        <option value="">All Categories</option>
+                        <option value="education">Education</option>
+                        <option value="children">Children</option>
+                        <option value="poverty">Poverty</option>
+                        <option value="healthcare">Healthcare</option>
+                    </select>
+                    <select id="locationFilter" class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        <option value="">All Locations</option>
+                        <option value="mumbai">Mumbai</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="bangalore">Bangalore</option>
+                    </select>
+                </div>
+
+                <!-- NGO Grid -->
+                <div id="ngoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- NGOs will be loaded here -->
+                </div>
+            </div>
+
+            <!-- My Donations Section -->
+            <div id="donations" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">My Donations</h1>
+                    <p class="text-gray-600">Track your donation history and impact</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="text-center text-gray-500 py-12">
+                        <i data-lucide="heart" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">No donations yet</h3>
+                        <p class="text-gray-600 mb-4">Start making a difference by donating to NGOs</p>
+                        <button onclick="showSection('ngos')" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">Browse NGOs</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Volunteer Events Section -->
+            <div id="volunteer" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Volunteer Events</h1>
+                    <p class="text-gray-600">Join volunteer events and make a hands-on impact</p>
+                </div>
+
+                <div id="volunteerEvents" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Events will be loaded here -->
+                </div>
+            </div>
+
+            <!-- My Impact Section -->
+            <div id="impact" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">My Impact</h1>
+                    <p class="text-gray-600">See the difference you've made</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Impact Summary</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Children Helped</span>
+                                <span class="font-semibold" id="childrenHelped">0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Meals Provided</span>
+                                <span class="font-semibold" id="mealsProvided">0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Communities Reached</span>
+                                <span class="font-semibold" id="communitiesReached">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Badges Earned</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="text-center p-4 border-2 border-dashed border-gray-200 rounded-lg">
+                                <i data-lucide="award" class="w-8 h-8 mx-auto mb-2 text-gray-300"></i>
+                                <p class="text-sm text-gray-500">First Donation</p>
+                            </div>
+                            <div class="text-center p-4 border-2 border-dashed border-gray-200 rounded-lg">
+                                <i data-lucide="heart" class="w-8 h-8 mx-auto mb-2 text-gray-300"></i>
+                                <p class="text-sm text-gray-500">Generous Giver</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="section">
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Settings</h1>
+                    <p class="text-gray-600">Manage your account preferences</p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Profile Information</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                            <input type="text" id="profileName" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                            <input type="email" id="profileEmail" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-green-500">
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <button onclick="saveProfile()" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">Save Changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/main.js"></script>
+    <script src="../js/auth.js"></script>
+    <script>
+        // Dashboard specific functions
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Remove active class from all sidebar links
+            document.querySelectorAll('.sidebar-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.add('active');
+            
+            // Add active class to clicked sidebar link
+            document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+            
+            // Load section-specific content
+            switch(sectionName) {
+                case 'ngos':
+                    loadDashboardNGOs();
+                    break;
+                case 'volunteer':
+                    loadVolunteerEvents();
+                    break;
+                case 'overview':
+                    loadDashboardStats();
+                    break;
+            }
+        }
+
+        function loadDashboardNGOs() {
+            const ngoGrid = document.getElementById('ngoGrid');
+            const ngos = JSON.parse(localStorage.getItem('ngos') || '[]');
+            
+            ngoGrid.innerHTML = ngos.map(ngo => `
+                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <img src="${ngo.image}" alt="${ngo.name}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-2">
+                            <h3 class="text-xl font-semibold text-gray-900">${ngo.name}</h3>
+                            ${ngo.verified ? '<span class="status-badge status-active">Verified</span>' : ''}
+                        </div>
+                        <p class="text-gray-600 mb-4">${ngo.description}</p>
+                        <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                            <span><i data-lucide="map-pin" class="w-4 h-4 inline mr-1"></i>${ngo.location}</span>
+                            <span><i data-lucide="users" class="w-4 h-4 inline mr-1"></i>${ngo.volunteers} volunteers</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-600 mb-1">Total Raised: ${formatCurrency(ngo.totalRaised)}</div>
+                            <div class="text-sm text-green-600 font-medium">${ngo.impact}</div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="viewNGO(${ngo.id})" class="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition text-sm">View Details</button>
+                            <button onclick="donateToNGO(${ngo.id})" class="flex-1 border border-green-600 text-green-600 py-2 px-4 rounded-md hover:bg-green-50 transition text-sm">Donate</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        function loadVolunteerEvents() {
+            const eventsContainer = document.getElementById('volunteerEvents');
+            const events = JSON.parse(localStorage.getItem('events') || '[]');
+            
+            eventsContainer.innerHTML = events.map(event => `
+                <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                    <img src="${event.image}" alt="${event.title}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2">${event.title}</h3>
+                        <p class="text-gray-600 mb-4">${event.description}</p>
+                        <div class="space-y-2 text-sm text-gray-500 mb-4">
+                            <div class="flex items-center">
+                                <i data-lucide="calendar" class="w-4 h-4 mr-2"></i>
+                                <span>${formatDate(event.date)} at ${event.time}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-lucide="map-pin" class="w-4 h-4 mr-2"></i>
+                                <span>${event.location}</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i data-lucide="users" class="w-4 h-4 mr-2"></i>
+                                <span>${event.registered}/${event.volunteers} registered</span>
+                            </div>
+                        </div>
+                        <button onclick="registerForEvent(${event.id})" class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">Register</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        function loadDashboardStats() {
+            // Load user stats from localStorage or calculate them
+            const donations = JSON.parse(localStorage.getItem('userDonations') || '[]');
+            const volunteerHours = localStorage.getItem('volunteerHours') || '0';
+            
+            const totalDonated = donations.reduce((sum, donation) => sum + donation.amount, 0);
+            const ngosSupported = new Set(donations.map(d => d.ngoId)).size;
+            
+            document.getElementById('totalDonated').textContent = formatCurrency(totalDonated);
+            document.getElementById('hoursVolunteered').textContent = volunteerHours;
+            document.getElementById('ngosSupported').textContent = ngosSupported;
+            document.getElementById('impactScore').textContent = Math.floor(totalDonated / 1000 + parseInt(volunteerHours) * 10);
+        }
+
+        function registerForEvent(eventId) {
+            const currentUser = getCurrentUser();
+            if (!currentUser) {
+                alert('Please login to register for events');
+                return;
+            }
+            
+            showToast('Successfully registered for the event!', 'success');
+        }
+
+        function saveProfile() {
+            const name = document.getElementById('profileName').value;
+            const email = document.getElementById('profileEmail').value;
+            
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                currentUser.name = name;
+                currentUser.email = email;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showToast('Profile updated successfully!', 'success');
+            }
+        }
+
+        function goToProfile() {
+            showSection('settings');
+        }
+
+        // Search and filter functions
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            showSection('overview');
+            
+            // Load profile data
+            const currentUser = getCurrentUser();
+            if (currentUser) {
+                document.getElementById('profileName').value = currentUser.name || '';
+                document.getElementById('profileEmail').value = currentUser.email || '';
+            }
+            
+            // Search functionality
+            const searchInput = document.getElementById('ngoSearch');
+            const categoryFilter = document.getElementById('categoryFilter');
+            const locationFilter = document.getElementById('locationFilter');
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', filterNGOs);
+            }
+            if (categoryFilter) {
+                categoryFilter.addEventListener('change', filterNGOs);
+            }
+            if (locationFilter) {
+                locationFilter.addEventListener('change', filterNGOs);
+            }
+            
+            lucide.createIcons();
+        });
+
+        function filterNGOs() {
+            const searchTerm = document.getElementById('ngoSearch').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const locationFilter = document.getElementById('locationFilter').value;
+            
+            const ngos = JSON.parse(localStorage.getItem('ngos') || '[]');
+            const filteredNGOs = ngos.filter(ngo => {
+                const matchesSearch = ngo.name.toLowerCase().includes(searchTerm) || 
+                                    ngo.description.toLowerCase().includes(searchTerm);
+                const matchesCategory = !categoryFilter || ngo.category === categoryFilter;
+                const matchesLocation = !locationFilter || ngo.location === locationFilter;
+                
+                return matchesSearch && matchesCategory && matchesLocation;
+            });
+            
+            const ngoGrid = document.getElementById('ngoGrid');
+            if (filteredNGOs.length === 0) {
+                ngoGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i data-lucide="search" class="w-16 h-16 mx-auto mb-4 text-gray-300"></i>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">No NGOs found</h3>
+                        <p class="text-gray-600">Try adjusting your search or filters</p>
+                    </div>
+                `;
+            } else {
+                ngoGrid.innerHTML = filteredNGOs.map(ngo => `
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden card-hover">
+                        <img src="${ngo.image}" alt="${ngo.name}" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-xl font-semibold text-gray-900">${ngo.name}</h3>
+                                ${ngo.verified ? '<span class="status-badge status-active">Verified</span>' : ''}
+                            </div>
+                            <p class="text-gray-600 mb-4">${ngo.description}</p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                <span><i data-lucide="map-pin" class="w-4 h-4 inline mr-1"></i>${ngo.location}</span>
+                                <span><i data-lucide="users" class="w-4 h-4 inline mr-1"></i>${ngo.volunteers} volunteers</span>
+                            </div>
+                            <div class="mb-4">
+                                <div class="text-sm text-gray-600 mb-1">Total Raised: ${formatCurrency(ngo.totalRaised)}</div>
+                                <div class="text-sm text-green-600 font-medium">${ngo.impact}</div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button onclick="viewNGO(${ngo.id})" class="flex-1 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition text-sm">View Details</button>
+                                <button onclick="donateToNGO(${ngo.id})" class="flex-1 border border-green-600 text-green-600 py-2 px-4 rounded-md hover:bg-green-50 transition text-sm">Donate</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>
