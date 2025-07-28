@@ -307,6 +307,20 @@ function initializeSampleData() {
         ngoId: 1,
         verified: true,
       },
+      {
+        id: 3,
+        name: "John Doe",
+        email: "john@example.com",
+        password: "user123",
+        role: "donor",
+      },
+      {
+        id: 4,
+        name: "Jane Smith",
+        email: "jane@example.com",
+        password: "volunteer123",
+        role: "volunteer",
+      },
     ]
 
     localStorage.setItem("users", JSON.stringify(sampleUsers))
@@ -353,7 +367,12 @@ function loadFeaturedNGOs() {
 // View NGO details
 function viewNGO(ngoId) {
   localStorage.setItem("selectedNGO", ngoId)
-  window.location.href = "pages/ngo-profile.html"
+  // Check if we're already in pages directory
+  if (window.location.pathname.includes("/pages/")) {
+    window.location.href = "ngo-profile.html"
+  } else {
+    window.location.href = "pages/ngo-profile.html"
+  }
 }
 
 // Donate to NGO
@@ -366,7 +385,12 @@ function donateToNGO(ngoId) {
   }
 
   localStorage.setItem("selectedNGO", ngoId)
-  window.location.href = "pages/campaign-details.html"
+  // Check if we're already in pages directory
+  if (window.location.pathname.includes("/pages/")) {
+    window.location.href = "campaign-details.html"
+  } else {
+    window.location.href = "pages/campaign-details.html"
+  }
 }
 
 // Toggle user dropdown
@@ -375,25 +399,28 @@ function toggleUserDropdown() {
   dropdown.classList.toggle("hidden")
 }
 
-// Go to appropriate dashboard based on user role
+// Go to unified dashboard
 function goToDashboard() {
   const currentUser = getCurrentUser()
   if (!currentUser) return
 
-  const dashboards = {
-    donor: "pages/donor-dashboard.html",
-    volunteer: "pages/volunteer-dashboard.html",
-    ngo: "pages/ngo-dashboard.html",
-    admin: "pages/admin-dashboard.html",
+  // Check if we're already in pages directory
+  if (window.location.pathname.includes("/pages/")) {
+    window.location.href = "dashboard.html"
+  } else {
+    window.location.href = "pages/dashboard.html"
   }
-
-  window.location.href = dashboards[currentUser.role]
 }
 
 // Logout function
 function logout() {
   localStorage.removeItem("currentUser")
-  window.location.href = "../index.html"
+  // Check if we're in a pages subdirectory
+  if (window.location.pathname.includes("/pages/")) {
+    window.location.href = "../index.html"
+  } else {
+    window.location.href = "index.html"
+  }
 }
 
 // Show toast notification
