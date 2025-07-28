@@ -153,6 +153,9 @@ function loadNGOProfile() {
     return
   }
 
+  // Debug: Log the NGO data to see if image exists
+  console.log("Loading NGO profile:", ngo.name, "Image URL:", ngo.image)
+
   // Update page content
   document.getElementById("ngoName").textContent = ngo.name
   document.getElementById("ngoDescription").textContent = ngo.description
@@ -212,3 +215,14 @@ function donateToCampaign(campaignId) {
   localStorage.setItem("selectedCampaign", campaignId)
   window.location.href = "campaign-details.html"
 }
+
+// Initialize page when DOM loads
+document.addEventListener("DOMContentLoaded", function() {
+  // Check if we're on the NGO profile page
+  if (window.location.pathname.includes("ngo-profile.html")) {
+    loadNGOProfile()
+  } else {
+    // Load NGO directory
+    loadNGOs()
+  }
+})
