@@ -31,6 +31,8 @@ function getCurrentUser() {
 
 // Initialize sample data if not exists
 function initializeSampleData() {
+  // Force refresh NGO data to update images
+  localStorage.removeItem("ngos");
   if (!localStorage.getItem("ngos")) {
     const sampleNGOs = [
       {
@@ -40,7 +42,7 @@ function initializeSampleData() {
         location: "bangalore",
         description: "Providing mid-day meals to school children across India",
         mission: "To eliminate classroom hunger and bring children to school",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://www.akshayapatra.org/includefiles/userfiles/images/Our-Work-1.jpg",
         verified: true,
         totalRaised: 2500000,
         activecampaigns: 3,
@@ -70,7 +72,7 @@ function initializeSampleData() {
         location: "mumbai",
         description: "Building a movement of leaders to eliminate educational inequity",
         mission: "To end educational inequity in India",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0PDvMGcqJIxZLMXggpDDxiNJmWHapRZSgQA&s",
         verified: true,
         totalRaised: 1800000,
         activecampaigns: 2,
@@ -100,7 +102,7 @@ function initializeSampleData() {
         location: "delhi",
         description: "Working towards the welfare of underprivileged children and youth",
         mission: "To ensure education, healthcare and livelihood for the underprivileged",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQauby74jDKTD4TKSb77w474JnQyoG6HPJCxw&s",
         verified: true,
         totalRaised: 3200000,
         activecampaigns: 4,
@@ -130,7 +132,7 @@ function initializeSampleData() {
         location: "delhi",
         description: "Turning urban waste into rural development resource",
         mission: "To make clothing a matter of dignity, not charity",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgPXqArOVhrzF4UbjGfuHu_dAelUqW26pbdQ&s",
         verified: true,
         totalRaised: 1500000,
         activeCards: 2,
@@ -160,7 +162,7 @@ function initializeSampleData() {
         location: "mumbai",
         description: "Improving the quality of education for underprivileged children",
         mission: "Every child in school and learning well",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo7knbXybTrKidr_xwBT6X5pONtrIVOULWuSO5tU1n393lO9cOSs4gSb7Fpn-GGxH3Btg&usqp=CAU",
         verified: true,
         totalRaised: 2800000,
         activeCards: 3,
@@ -190,7 +192,7 @@ function initializeSampleData() {
         location: "mumbai",
         description: "Ensuring happier childhoods for underprivileged children",
         mission: "To restore childhood to every child",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNWE34wslga6NKWP7R8vzH0xcuAG1EDVni9Q&s",
         verified: true,
         totalRaised: 2200000,
         activeCards: 3,
@@ -234,7 +236,7 @@ function initializeSampleData() {
         registered: 32,
         category: "food",
         requirements: "No prior experience required. Training will be provided.",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://www.akshayapatra.org/includefiles/photos/thumbs/554.jpg",
       },
       {
         id: 2,
@@ -249,7 +251,7 @@ function initializeSampleData() {
         registered: 18,
         category: "education",
         requirements: "Basic knowledge of English and Mathematics required",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT383pjM8Rs-ZH5ivL4dewjpxCvpcfx91wwLg&s",
       },
       {
         id: 3,
@@ -264,7 +266,7 @@ function initializeSampleData() {
         registered: 25,
         category: "healthcare",
         requirements: "Medical students preferred but not mandatory",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhgA5hpNj0m5j7ie8g6_b2dlUBYkQiPRy3tw&s",
       },
       {
         id: 4,
@@ -279,7 +281,7 @@ function initializeSampleData() {
         registered: 15,
         category: "community",
         requirements: "Physical work involved. Comfortable clothing recommended.",
-        image: "/placeholder.svg?height=200&width=300",
+        image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRH97Acw6_f9X2h8msKZrbnU6vAPdXuGL-W0g&s",
       },
     ]
 
